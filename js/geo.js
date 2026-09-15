@@ -57,10 +57,22 @@ window.MH370GEO = (function () {
     inferred: [[6.58, 96.35], [6.9, 95.3], [5.5, 94.0], [2.0, 93.4], [-10, 93.1], [-25, 93.0], [-35.6, 92.8]]
   };
 
+  // Coastline fallback: land polygons drawn in a pane beneath the tile layer, so they
+  // only show through where tiles are missing (offline use, or hosts that block tile servers).
+  function addLandFallback(map) {
+    if (!window.MH370LAND) return null;
+    map.createPane("land");
+    map.getPane("land").style.zIndex = 150;
+    return L.geoJSON(window.MH370LAND, {
+      pane: "land", interactive: false,
+      style: { color: "#1c2d4a", weight: 1, fillColor: "#0c1422", fillOpacity: 1 }
+    }).addTo(map);
+  }
+
   function fmtCoord(lat, lng) {
     var ns = lat >= 0 ? "N" : "S", ew = lng >= 0 ? "E" : "W";
     return Math.abs(lat).toFixed(3) + "° " + ns + ", " + Math.abs(lng).toFixed(3) + "° " + ew;
   }
 
-  return { destination: destination, seventhArc: seventhArc, arcBand: arcBand, areaPolygon: areaPolygon, ROUTE: ROUTE, fmtCoord: fmtCoord, SAT: SAT };
+  return { destination: destination, addLandFallback: addLandFallback, seventhArc: seventhArc, arcBand: arcBand, areaPolygon: areaPolygon, ROUTE: ROUTE, fmtCoord: fmtCoord, SAT: SAT };
 })();

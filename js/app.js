@@ -45,6 +45,7 @@
   var map = L.map("map", { worldCopyJump: true, zoomControl: true, attributionControl: true })
     .setView([-12, 85], 3);
 
+  G.addLandFallback(map);
   L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: "abcd", maxZoom: 12
