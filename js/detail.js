@@ -60,10 +60,7 @@
   // Mini map
   var map = L.map("detail-map", { zoomControl: false, attributionControl: true, scrollWheelZoom: false });
   G.addLandFallback(map);
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: "abcd", maxZoom: 12
-  }).addTo(map);
+  G.addBasemap(map);
   L.polyline(G.seventhArc(), { color: "#7fb3ff", weight: 1.5, opacity: .6, dashArray: "6 6" }).addTo(map);
   L.polyline(G.ROUTE.radar, { color: "#4f8dff", weight: 2, opacity: .6 }).addTo(map);
   L.polyline(G.ROUTE.inferred, { color: "#4f8dff", weight: 1.5, opacity: .5, dashArray: "8 8" }).addTo(map);

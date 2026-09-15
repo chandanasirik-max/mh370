@@ -69,10 +69,28 @@ window.MH370GEO = (function () {
     }).addTo(map);
   }
 
+  // Basemap: Esri's World Dark Gray canvas needs no API key. If its tiles fail to load,
+  // fall back to OpenStreetMap tiles darkened with a CSS filter.
+  function addBasemap(map) {
+    var esriAttr = 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, DeLorme, NAVTEQ';
+    var osmAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+    var esriUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_{layer}/MapServer/tile/{z}/{y}/{x}";
+    var base = L.tileLayer(esriUrl, { layer: "Base", attribution: esriAttr, maxZoom: 16 }).addTo(map);
+    var labels = L.tileLayer(esriUrl, { layer: "Reference", maxZoom: 16, pane: "shadowPane", opacity: .9 }).addTo(map);
+    var switched = false;
+    base.on("tileerror", function () {
+      if (switched) return;
+      switched = true;
+      map.removeLayer(base);
+      map.removeLayer(labels);
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: osmAttr, maxZoom: 19, className: "osm-dark" }).addTo(map);
+    });
+  }
+
   function fmtCoord(lat, lng) {
     var ns = lat >= 0 ? "N" : "S", ew = lng >= 0 ? "E" : "W";
     return Math.abs(lat).toFixed(3) + "° " + ns + ", " + Math.abs(lng).toFixed(3) + "° " + ew;
   }
 
-  return { destination: destination, addLandFallback: addLandFallback, seventhArc: seventhArc, arcBand: arcBand, areaPolygon: areaPolygon, ROUTE: ROUTE, fmtCoord: fmtCoord, SAT: SAT };
+  return { destination: destination, addLandFallback: addLandFallback, addBasemap: addBasemap, seventhArc: seventhArc, arcBand: arcBand, areaPolygon: areaPolygon, ROUTE: ROUTE, fmtCoord: fmtCoord, SAT: SAT };
 })();
