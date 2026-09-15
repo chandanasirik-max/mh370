@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MH370 — Data point</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2304070c'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%232f7fff'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html"><span class="dot"></span>MH370<small>Tracker</small></a>
+      <nav class="nav">
+        <a href="index.html#map">Map</a>
+        <a href="index.html#group-route">Route</a>
+        <a href="index.html#group-search">Search areas</a>
+        <a href="index.html#group-position">Final positions</a>
+        <a href="index.html#group-debris">Debris</a>
+        <a href="index.html#timeline">Timeline</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="detail"></main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Positions are compiled from the ATSB and Malaysian Safety Investigation reports, Inmarsat, CSIRO, DSTG and public reporting; some coordinates are approximate. Map tiles © OpenStreetMap contributors, © CARTO.</p>
+    </div>
+  </footer>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/geo.js"></script>
+  <script src="js/detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MH370 — Flight route, search areas, debris and final positions</title>
+  <meta name="description" content="An interactive map and timeline of Malaysia Airlines Flight 370: the flight route, search areas, potential final positions and confirmed debris, with a live counter since the disappearance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2304070c'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%232f7fff'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html"><span class="dot"></span>MH370<small>Tracker</small></a>
+      <nav class="nav">
+        <a href="#map">Map</a>
+        <a href="#group-route">Route</a>
+        <a href="#group-search">Search areas</a>
+        <a href="#group-position">Final positions</a>
+        <a href="#group-debris">Debris</a>
+        <a href="#timeline">Timeline</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="eyebrow">Malaysia Airlines Flight 370 · Kuala Lumpur → Beijing</div>
+      <h1>Missing since <span>8 March 2014</span></h1>
+      <p class="lede">A Boeing 777 with 239 people on board vanished from radar over the South China Sea. Twelve years on, the aircraft has still not been found.</p>
+
+      <div class="counter" aria-live="off">
+        <div class="counter-label">Time since the transponder went silent — 01:21 MYT, 8 March 2014</div>
+        <div class="counter-grid" role="timer">
+          <div class="counter-cell"><div class="value" id="c-years">0</div><div class="unit">Years</div></div>
+          <div class="counter-cell"><div class="value" id="c-months">00</div><div class="unit">Months</div></div>
+          <div class="counter-cell"><div class="value" id="c-days">00</div><div class="unit">Days</div></div>
+          <div class="counter-cell"><div class="value" id="c-hours">00</div><div class="unit">Hours</div></div>
+          <div class="counter-cell"><div class="value" id="c-minutes">00</div><div class="unit">Minutes</div></div>
+          <div class="counter-cell"><div class="value" id="c-seconds">00</div><div class="unit">Seconds</div></div>
+        </div>
+        <div class="counter-inline" id="c-inline"></div>
+        <div class="counter-note">Format: Years : Months : Days : Hours : Minutes : Seconds</div>
+      </div>
+    </section>
+
+    <section class="section" id="map-section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="map-title">Interactive map</h2>
+            <p>Every pin is a data point. Hover for a summary, click to open its detail page. Blue lines show the flight path; the dashed arc is the 7th arc from the final satellite handshake.</p>
+          </div>
+        </div>
+        <div class="map-wrap">
+          <div class="map-toolbar">
+            <button class="chip" data-layer="route"><span class="swatch route"></span>Flight route</button>
+            <button class="chip" data-layer="search"><span class="swatch search"></span>Search areas</button>
+            <button class="chip" data-layer="position"><span class="swatch position"></span>Potential final positions</button>
+            <button class="chip" data-layer="debris"><span class="swatch debris"></span>Debris finds</button>
+            <button class="chip" data-layer="arc"><span class="swatch arc"></span>7th arc</button>
+            <button class="chip" id="fit-search">Zoom to search zone</button>
+            <button class="chip" id="fit-all">Reset view</button>
+            <span class="hint">Click a pin to open its page</span>
+          </div>
+          <div id="map"></div>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><div class="n">239</div><div class="l">People on board</div></div>
+          <div class="stat"><div class="n" id="stat-search">0</div><div class="l">Search areas</div></div>
+          <div class="stat"><div class="n" id="stat-position">0</div><div class="l">Final-position estimates</div></div>
+          <div class="stat"><div class="n" id="stat-debris">0</div><div class="l">Debris locations</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="data">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Data points</h2>
+            <p>The same points as on the map, grouped by category. Each opens a page with the full details, key facts and sources.</p>
+          </div>
+        </div>
+        <div id="cards"></div>
+      </div>
+    </section>
+
+    <section class="section" id="timeline-section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="timeline-title">Timeline</h2>
+            <p>From take-off to the current search.</p>
+          </div>
+        </div>
+        <ol class="timeline" id="timeline"></ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>About the data.</strong> Positions are compiled from the ATSB and Malaysian Safety Investigation reports, Inmarsat, CSIRO, DSTG and public reporting. Map coordinates for radar tracks, search zones and some debris finds are approximate. The 7th arc is drawn as a constant-range circle from the Inmarsat-3 F1 sub-satellite point, calibrated to published hotspot positions.</p>
+      <p>Map tiles © OpenStreetMap contributors, © CARTO. This site is an independent reference and is not affiliated with Malaysia Airlines or any investigating authority.</p>
+    </div>
+  </footer>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/geo.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
